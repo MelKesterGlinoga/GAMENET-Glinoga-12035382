@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -7,9 +7,7 @@ using Photon.Realtime;
 public class LaunchManager : MonoBehaviourPunCallbacks
 {
     public GameObject EnterGamePanel;
-
     public GameObject ConnectionStatusPanel;
-
     public GameObject LobbyPanel;
 
     private void Awake()
@@ -33,14 +31,14 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log(PhotonNetwork.NickName + " connected to photon servers");
+        Debug.Log(PhotonNetwork.NickName + " connected to photon severs");
         ConnectionStatusPanel.SetActive(false);
         LobbyPanel.SetActive(true);
     }
 
     public override void OnConnected()
     {
-        Debug.Log("connected to internet");
+        Debug.Log("connected to the internet");
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
@@ -51,11 +49,11 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     public void ConnectToPhotonServer()
     {
-        if (!PhotonNetwork.IsConnected)
+        if (!PhotonNetwork.IsConnected) 
         {
             PhotonNetwork.ConnectUsingSettings();
-            EnterGamePanel.SetActive(false);
             ConnectionStatusPanel.SetActive(true);
+            EnterGamePanel.SetActive(false);
         }
     }
 
@@ -66,7 +64,7 @@ public class LaunchManager : MonoBehaviourPunCallbacks
 
     private void CreateAndJoinRoom()
     {
-        string randomRoomName = "Room" + Random.Range(0, 10000);
+        string randomRoomName = "Room " + Random.Range(0, 10000);
 
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.IsOpen = true;
@@ -79,12 +77,11 @@ public class LaunchManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log(PhotonNetwork.NickName + " has entered " + PhotonNetwork.CurrentRoom.Name);
-        PhotonNetwork.LoadLevel("GameScene");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.Log(newPlayer.NickName + " has entered room " + PhotonNetwork.CurrentRoom.Name + ". Room has now " +
-            PhotonNetwork.CurrentRoom.PlayerCount + " players.");
+        Debug.Log(newPlayer.NickName + " has entered room " + PhotonNetwork.CurrentRoom.Name +
+            ". Room has now " + PhotonNetwork.CurrentRoom.PlayerCount + " players.");
     }
 }
