@@ -63,12 +63,13 @@ public class Shooting : MonoBehaviourPunCallbacks
         if (health <= 0)
         {
             Die();
-            Debug.Log(info.Sender.NickName + " killed " + info.photonView.Owner.NickName);
-            info.Sender.AddScore(5);
+            info.Sender.GetScore();
+            info.Sender.AddScore(1);
 
             if (info.Sender.GetScore() >= 10)
             {                
                 gameObject.GetComponent<PhotonView>().RPC("WinningText", RpcTarget.AllBuffered);
+                Debug.Log(info.Sender.NickName + " wins with " + info.Sender.GetScore().ToString());
             }
         }
     }
